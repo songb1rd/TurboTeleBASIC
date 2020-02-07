@@ -1,0 +1,19 @@
+%import common.INT
+%import common.WORD
+%import common.WS
+%import common.NEWLINE
+
+%ignore WS
+
+print: "print"i WS*
+
+END: "END"
+
+?stmt: print
+    | END
+
+// All TeleBASIC lines start with some positively signed numbered line.
+// Followed by a statement or raw expression.
+line: INT WS* stmt WS*
+
+start: (line* NEWLINE)*

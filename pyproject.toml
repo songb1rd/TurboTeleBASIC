@@ -7,6 +7,9 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pytest = "^5.3.5"
+click = "^7.0"
+lark-parser = "^0.8.1"
 
 [tool.poetry.dev-dependencies]
 

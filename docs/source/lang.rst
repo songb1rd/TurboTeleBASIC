@@ -1,16 +1,19 @@
-.. ___.                 .__        
-  \_ |__ _____    _____|__| ____  
-   | __ \\__  \  /  ___/  |/ ___\ 
-   | \_\ \/ __ \_\___ \|  \  \___ 
-   |___  (____  /____  >__|\___  >
-       \/     \/     \/        \/ 
-           Manual by archer (modified 12.12.2019)
-           (Transcribed to .rst by underwood 7.2.2020)
-
-
-
+=========
 TeleBASIC
 =========
+
+.. code-block:: py
+
+    """
+    .. ___.                 .__        
+      \_ |__ _____    _____|__| ____  
+       | __ \\__  \  /  ___/  |/ ___\ 
+       | \_\ \/ __ \_\___ \|  \  \___ 
+       |___  (____  /____  >__|\___  >
+           \/     \/     \/        \/ 
+               Manual by archer (modified 12.12.2019)
+               (Transcribed to .rst by underwood 7.2.2020)
+    """
 
 1. Variables and Data Types
 ---------------------------
@@ -1131,4 +1134,7 @@ Returns the numerical value of the specified String$::
 
 	10 PRINT VAL("12345")
 	 12345
+
+
+
 

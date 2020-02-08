@@ -7,15 +7,6 @@
 
 name: Labeler
 
-T-compiler:
-  - turbotelebasic/compiler/*
-
-T-lang:
-  - turbotelebasic/telebasic.lark
-
-T-docs:
-  - docs/*
-
 on:
   pull_request:
     types: [opened]

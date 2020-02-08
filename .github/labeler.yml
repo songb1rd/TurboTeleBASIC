@@ -1,0 +1,9 @@
+T-compiler:
+  - turbotelebasic/compiler/*
+
+T-lang:
+  - turbotelebasic/telebasic.lark
+
+T-docs:
+  - docs/*
+

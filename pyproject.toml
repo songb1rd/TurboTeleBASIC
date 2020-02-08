@@ -11,6 +11,7 @@ pytest = "^5.3.5"
 click = "^7.0"
 lark-parser = "^0.8.1"
 wasmer = "^0.3.0"
+llvmlite = "^0.31.0"
 
 [tool.poetry.dev-dependencies]
 

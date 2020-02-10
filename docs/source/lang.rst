@@ -1,19 +1,20 @@
-=========
 TeleBASIC
 =========
 
-.. code-block:: py
+-------------------
+Language Definition
+-------------------
 
-    """
-    .. ___.                 .__        
-      \_ |__ _____    _____|__| ____  
-       | __ \\__  \  /  ___/  |/ ___\ 
-       | \_\ \/ __ \_\___ \|  \  \___ 
-       |___  (____  /____  >__|\___  >
-           \/     \/     \/        \/ 
-               Manual by archer (modified 12.12.2019)
-               (Transcribed to .rst by underwood 7.2.2020)
-    """
+.. code:: text
+
+  ___.                 .__        
+  \_ |__ _____    _____|__| ____  
+   | __ \\__  \  /  ___/  |/ ___\ 
+   | \_\ \/ __ \_\___ \|  \  \___ 
+   |___  (____  /____  >__|\___  >
+       \/     \/     \/        \/ 
+           Manual by archer (modified 9.2.2020)
+
 
 1. Variables and Data Types
 ---------------------------
@@ -21,29 +22,43 @@ You can store either text or numerical values in variables.
 Variable names can contain letters and digits, but they have to start with a letter. 
 You cannot use reserved keywords (e.g. ``FOR``, ``IF``) as variable names.
 Variable names can be suffixed with a type-definition character:
- - ``$`` represents a text (string) value
- - ``%`` represents a numeric (integer) value
- - ``!`` represents a numeric (single-precision) value
+
+- ``$`` represents a text (string) value
+- ``%`` represents a numeric (integer) value
+- ``!`` represents a numeric (single-precision) value
+
 Numerical variables and strings cannot be used interchangeably.
-For example::
+For example:
+
+.. code:: basic
 
 	10 NAME$ = "some name"
 
-would represent a string variable, but::
+would represent a string variable, but:
+
+.. code:: basic
 
 	10 NAME% = "some name"
 
 would throw a ``TYPE MISMATCH ERROR`` as you can't assign a string to a numeric variable.
 
 2. Arrays
-------------------
+---------
+
 An array is basically a list of values. These can be accessed by specifying an index number.
-For example, we define a string array of size 10::
+For example, we define a string array of size 10
+
+.. code:: basic
+
 	10 DIM MYLIST$(10)
 
 Now we can modify the 5th entry (note that the array index usually starts at 0, and can be also negative)
-::
+
+.. code:: basic
+
 	20 MYLIST$(4) = "some text"
+
+
 
 3. Overview of Commands
 -----------------------
@@ -70,7 +85,7 @@ Sends a bell
 
 ``brk``
 ~~~~~~~
-Sets and returns status of BREAK key
+Sets and returns status of ``BREAK`` key
 
 ``chr$``
 ~~~~~~~~
@@ -106,7 +121,7 @@ Convert a specified value to a single precision number
 
 ``data``
 ~~~~~~~~
-Store the numeric and string constants that are accessed by the program READ statements
+Store the numeric and string constants that are accessed by the program ``READ`` statements
 
 ``date$``
 ~~~~~~~~~
@@ -226,7 +241,7 @@ Returns the natural logarithm of the specified value (Base 10)
 
 ``mid$``
 ~~~~~~~~
-Returns a string of l characters from String beginning with the n Character
+Returns a string of ``l`` characters from ``String$`` beginning with the ``n`` th character
 
 ``new``
 ~~~~~~~
@@ -253,7 +268,7 @@ Returns a octal value of a specific value
 Opens a file
 
 ``pclear0``
-~~~~~~~~~~~
+~~~~~~~~
 Reserves one page of memory (no effect)
 
 ``pclear1``
@@ -274,11 +289,11 @@ Write a byte of data into the specified memory location
 
 ``polkey$``
 ~~~~~~~~~~~
-Returns one character read from the terminal. when no key is hit within one second, it returns an empty string
+Returns one character read from the terminal. When no key is hit within one second, it returns an empty string
 
 ``pos``
 ~~~~~~~
-Returns the character position in string 1, where the first occurrence of string 2 was found
+Returns the character position in ``string1$``, where the first occurrence of ``string2$`` was found
 
 ``print``
 ~~~~~~~~~
@@ -294,7 +309,7 @@ Reseed the random number generator
 
 ``read``
 ~~~~~~~~
-Read a value from DATA and assign them to variables
+Read a value from ``DATA`` and assign them to variables
 
 ``rec``       
 ~~~~~~~
@@ -302,7 +317,7 @@ Returns the current record number (line number) in the specified file
 
 ``rem``
 ~~~~~~~
-Explanatory remark. does not get executed by the interpreter
+Explanatory remark. Does not get executed by the interpreter
 
 ``renumber``
 ~~~~~~~~~~~~
@@ -310,7 +325,7 @@ Renumbers a basic program
 
 ``restore``
 ~~~~~~~~~~~
-Allow DATA statements to be reread
+Allow ``DATA`` statements to be reread
 
 ``return``
 ~~~~~~~~~~
@@ -318,7 +333,7 @@ Return from a subroutine
 
 ``right$``
 ~~~~~~~~~~
-Returns the rightmost Number(n) characters of the specified String
+Returns the rightmost ``n`` characters of the specified string
 
 ``rnd``
 ~~~~~~~
@@ -338,23 +353,19 @@ Returns the trigonometric sine of the specified value
 
 ``sleep``
 ~~~~~~~~~
-Pauses the program for a specified amount of seconds
+Pauses the program for ``n`` seconds
 
 ``space$``
 ~~~~~~~~~~
-Returns a string of specified Number value of spaces
-
-``spa``
-~~~~~~~
-Returns a string of specified Number value of spaces
+Returns a string of ``n`` spaces
 
 ``spc$``
 ~~~~~~~~
-Returns a string of specified Number value of spaces
+Returns a string of ``n`` spaces
 
-``spa``
-~~~~~~~
-Returns a string of specified Number value of spaces
+``spa$``
+~~~~~~~~
+Returns a string of ``n`` spaces
 
 ``sqr``
 ~~~~~~~
@@ -366,7 +377,7 @@ Returns the square root of the specified value
 
 ``stop``
 ~~~~~~~~
-Ralts the program and returns to the basic interpreter
+Halts the program and returns to the basic interpreter
 
 ``str$``
 ~~~~~~~~
@@ -378,15 +389,11 @@ Returns various system values
 
 ``string$``
 ~~~~~~~~~~~
-Repeats a string n times
-
-``tab``
-~~~~~~~
-Returns the specified amount of spaces
+Repeats a string ``n`` times
 
 ``tab$``
 ~~~~~~~~
-Returns the specified amount of spaces
+Returns a string of ``n`` spaces
 
 ``tan``
 ~~~~~~~
@@ -438,33 +445,41 @@ Returns the numerical value of the specified string value
 
 ``ABS(n)``
 ~~~~~~~~~~
-Returns the absolute value of the specified value n::
+
+Returns the absolute value of the specified value ``n``:
+
+.. code:: basic
 
 	PRINT ABS(-40)
 	 40
 
-
 ``ASC(character)``, ``NUM(character)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Returns the ASCII-Code for its equivalent character::
+Returns the ASCII-Code for its equivalent character:
+
+.. code:: basic
 
 	10 PRINT ASC(" ")
 	 32
 
 ``ARG$``
 ~~~~~~~~
-
 A string variable this is populated with a string containing the command line arguments
-when a BASIC program is run from the shell command prompt::
+when a BASIC program is run from the shell command prompt:
+
+.. code::
 
 	@program foo bar
  	 PRINT ARG$
 	  foo bar
 
+
 ``ATN(n)``
 ~~~~~~~~~~
-Returns the arctangent of the specified value n::
+Returns the arctangent of the specified value ``n``:
+
+.. code:: basic
 
 	PRINT ATN(40)
 	 1.546
@@ -472,14 +487,18 @@ Returns the arctangent of the specified value n::
 
 ``BRK(n)``
 ~~~~~~~~~~
-Enables and disables the break key::
+Enables and disables the ``BREAK`` key:
+
+.. code:: basic
 
 	Y=BRK(0):REM break is disabled
 
 
 ``CHR$(n)``
 ~~~~~~~~~~~
-Convert an ASCII-Code (n) to its equivalent character::
+Convert an ASCII-Code (n) to its equivalent character:
+
+.. code:: basic
 
 	PRINT CHR$(66)
 	 B
@@ -487,7 +506,9 @@ Convert an ASCII-Code (n) to its equivalent character::
 
 ``CINT(n)``
 ~~~~~~~~~~~
-Returns the nearest integer of the specified value (9.5 becomes 10)::
+Returns the nearest integer of the specified value (9.5 becomes 10):
+
+.. code:: basic
 
 	PRINT CINT(5.7)
 	 6
@@ -495,24 +516,46 @@ Returns the nearest integer of the specified value (9.5 becomes 10)::
 
 ``COLOR(a, b)``
 ~~~~~~~~~~~~~~~
-Changes the background(b) and/or foreground(a) color of the terminal::
+Changes the background(``b``) and/or foreground(``a``) color of the terminal:
+
+.. code:: basic
 
 	COLOR 3, 4
 	PRINT "Hello"
-	 (prints Hello with blue(b) background and yellow(a) foreground text)
-     (a List of possible Colors can be found with the command "show colors")
-<underwood remember to put something about ansi escape sequences here!>
+
+This prints Hello with blue(``b``) background and yellow(``a``) foreground text.
+A List of possible colors can be found with the command ``show colors``.
+
+Different shades (and other fancy tricks) can be done using ansi escape-sequences:
+
+.. code:: basic
+
+   10  E$ = CHR$(27)
+   20  FOR COLOUR = 1 TO 15 : BG$ = E$ + "[48;5;" + STR$(COLOUR) + "m"
+   30  PRINT BG$ SPC$(3-LEN(COLOUR)) STR$(COLOUR) ;
+   40  SLEEP 0.001 : NEXT COLOUR : PRINT
+   50  FOR COLOUR = 16 TO 255 : BG$ = E$ + "[48;5;" + STR$(COLOUR) + "m"
+   60  PRINT BG$ SPC$(3-LEN(COLOUR)) STR$(COLOUR) ;
+   70  SLEEP 0.001
+   80  BR = BR + 1 IF BR = 36 THEN : BR = 0 : PRINT
+   90  NEXT COLOUR : PRINT
+
+This prints a list of colours and their codes.  Not all terminals support this.
 
 ``COS(n)``
 ~~~~~~~~~~
-Returns the cosinus of a specified value (n) in radians::
+Returns the cosinus of a specified value ``n`` in radians:
+
+.. code:: basic
 
 	PRINT COS(67)
 	 -0.517769799789505
 
 ``CSNG(n)``
 ~~~~~~~~~~~
-Convert a specified value(n) to a single precision number::
+Convert a specified value ``n`` to a single precision number:
+
+.. code:: basic
 
 	PRINT CSNG("3.45")
 	 3.450
@@ -520,7 +563,9 @@ Convert a specified value(n) to a single precision number::
 
 ``DATA n...``
 ~~~~~~~~~~~~~
-Store the numeric and string constants that are accessed by the program ``READ`` statements::
+Store the numeric and string constants that are accessed by the program ``READ`` statements:
+
+.. code:: basic
 
 	DATA 4.1, 5.6, 9.98
 	READ A, B, C
@@ -530,8 +575,10 @@ Store the numeric and string constants that are accessed by the program ``READ``
 
 ``DEF FNname(Argument) = Expression``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Define a function with the Name 'FNname' which accept an 'Argument' and returns the defined expression. Function name
-must always begin with FN::
+Define a function with the Name ``FNname`` which accept an ``Argument`` and returns the defined ``Expression``. Function name
+must always begin with ``FN``:
+
+.. code:: basic
 
 	10 DEF FN square(x)=x^2
 	20 DEF FNcube(x) = x^3
@@ -542,35 +589,45 @@ must always begin with FN::
 
 ``DEFDBL (variable)``
 ~~~~~~~~~~~~~~~~~~~~~
-Declare a variable as double precision number::
+Declare a variable as double precision number:
+
+.. code:: basic
 
 	DEFDBL Variable
 
 
 ``DEFINT (Variable)``
 ~~~~~~~~~~~~~~~~~~~~~
-Declare a variable as integer number::
+Declare a variable as integer number:
+
+.. code:: basic
 
 	DEFINT Variable
 
 
 ``DEFSNG (Variable)``
 ~~~~~~~~~~~~~~~~~~~~~
-Declare a variable as single precision number::
+Declare a variable as single precision number:
+
+.. code:: basic
 
 	DEFSNG Variable
 
 
-``DEFSTR (Variable)``
-~~~~~~~~~~~~~~~~~~~~~
-Declare a variable as string::
+``DEFSTR (Variable$)``
+~~~~~~~~~~~~~~~~~~~~~~
+Declare a variable as string:
 
-	DEFSTR Variable
+.. code:: basic
+
+	DEFSTR Variable$
 
 
 ``DIM (Variable)``
 ~~~~~~~~~~~~~~~~~~
-Define an array of a fixed size::
+Define an array of a fixed size ``n``:
+
+.. code:: basic
 
 	DIM Variable(n)
 
@@ -579,14 +636,18 @@ This would define an array called ``Variable`` with a maximum size of ``n``.
 
 ``DIR$``
 ~~~~~~~~
-Returns the filenames in your local directory, separated by spaces::
+Returns the filenames in your local directory, separated by spaces:
+
+.. code:: basic
 
 	PRINT DIR$
 
 
 ``EXP(n)``
 ~~~~~~~~~~
-Return the base of natural logarithms to the power of ``n``::
+Return the base of natural logarithms to the power of ``n``:
+
+.. code:: basic
 
 	PRINT EXP(13)
 	 442413.392
@@ -594,22 +655,30 @@ Return the base of natural logarithms to the power of ``n``::
 
 ``FOR (variable) = (startValue) TO (maxValue) [STEP n]``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Execute a series of instructions a specified number of times in a loop::
+Execute a series of instructions a specified number of times in a loop:
+
+.. code:: basic
 
 	10 FOR I = 1 TO 40
 	20  PRINT I
 	30 NEXT I
+
 This would run 40 times and output every time the current counter. It would increase ``I`` everytime by 1.
-::
+
+.. code:: basic
+
 	10 FOR I = 1 TO 40 STEP 2
 	20  PRINT I
 	30 NEXT I
+
 This would run 40 times and output every time the current counter. It would increase ``I`` everytime by 2.
 
 
 ``GOSUB (LineNumber)``
 ~~~~~~~~~~~~~~~~~~~~~~
-Branch to a subroutine and return::
+Branch to a subroutine and return:
+
+.. code:: basic
 
 	10 GOSUB 100
 	20 PRINT "Now im back from the Subroutine"
@@ -623,7 +692,9 @@ Branch to a subroutine and return::
 
 ``GOTO (LineNumber)``
 ~~~~~~~~~~~~~~~~~~~~~
-Branch unconditionally out of the normal program sequence to a specified line number::
+Branch unconditionally out of the normal program sequence to a specified line number:
+
+.. code:: basic
 
 	10 PRINT "Hello World!";
 	20 GOTO 10
@@ -631,15 +702,19 @@ Branch unconditionally out of the normal program sequence to a specified line nu
 
 ``HEIGHT``
 ~~~~~~~~~~
-Returns your terminal height::
+Returns your terminal height:
+
+.. code:: basic
 
 	10 PRINT height
 	 42
 
 
 ``HEX$ (n)``
-~~~~~~~~~~~~~
-Returns a string which represents the hexadecimal value of ``n`` value::
+~~~~~~~~~~~~
+Returns a string which represents the hexadecimal value of ``n`` value:
+
+.. code:: basic
 
 	10 PRINT HEX$(127)
 	 7F
@@ -647,7 +722,9 @@ Returns a string which represents the hexadecimal value of ``n`` value::
 
 ``IF expression THEN statements``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Make a decision regarding program flow based on the result of a returned expression::
+Make a decision regarding program flow based on the result of a returned expression:
+
+.. code:: basic
 
 	10 K = 3
 	20 J = 10
@@ -657,7 +734,9 @@ Make a decision regarding program flow based on the result of a returned express
 
 ``INKEY$``
 ~~~~~~~~~~
-Returns one character read from the terminal. It will wait till any character is being typed::
+Returns one character read from the terminal. It will wait till any character is being typed:
+
+.. code:: basic
 
 	10 A$ = INKEY$
 	20 PRINT A$
@@ -665,12 +744,16 @@ Returns one character read from the terminal. It will wait till any character is
 
 ``INPUT Prompt, Variable`` / ``INPUT FileNo, Variable``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Shows prompt and reads input from the user's terminal and saves it into a variable::
+Shows prompt and reads input from the user's terminal and saves it into a variable:
+
+.. code:: basic
 
 	10 INPUT "Enter something>", A$
 	20 PRINT A$
 
-Reads a Line from an open File and saves it into variable::
+Reads a Line from an open File and saves it into variable:
+
+.. code:: basic
 
 	10 INPUT# 1, A$
 	20 PRINT A$
@@ -678,7 +761,9 @@ Reads a Line from an open File and saves it into variable::
 
 ``INSTR(string$, searchFor$, startPos)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Returns the position (starting with 0) of a substring in a string::
+Returns the position (starting with 0) of a substring in a string:
+
+.. code:: basic
 
 	10 TEXT$ = "Hello World"
 	20 SEARCHFOR$ = "W"
@@ -688,7 +773,9 @@ Returns the position (starting with 0) of a substring in a string::
 
 ``INT (n)``
 ~~~~~~~~~~~
-Truncate an value to a whole number::
+Truncate an value to a whole number:
+
+.. code:: basic
 
 	10 PRINT INT(5.6)
 	 5
@@ -698,7 +785,8 @@ Truncate an value to a whole number::
 ~~~~~~~~~~~~~~~~~~~
 Returns the number of the data item currently pointed to in the current record of file ``fileNumber``.
 In Telehack BASIC this will almost always be 1.
-::
+
+.. code:: basic
 
 	10 PRINT #1;A,B,C
 	20 READ #1,1;A
@@ -708,7 +796,9 @@ In Telehack BASIC this will almost always be 1.
 
 ``LEFT$(string$, Number)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Returns a string that comprises the left-most specified number characters of a specified string::
+Returns a string that comprises the left-most specified number characters of a specified string:
+
+.. code:: basic
 
 	10 A$ = "Hello World"
 	20 B$ = LEFT$(A$, 5)
@@ -718,7 +808,9 @@ Returns a string that comprises the left-most specified number characters of a s
 
 ``LEN(String$)``
 ~~~~~~~~~~~~~~~~
-Returns the number of characters in the specified string::
+Returns the number of characters in the specified string:
+
+.. code:: basic
 
 	10 A$ = "Hello World"
 	20 PRINT LEN(A$)
@@ -727,7 +819,9 @@ Returns the number of characters in the specified string::
 
 ``LET Variable = Value``
 ~~~~~~~~~~~~~~~~~~~~~~~~
-Assigns a value to a variable::
+Assigns a value to a variable:
+
+.. code:: basic
 
 	10 LET A = 12345
 	20 PRINT A
@@ -736,7 +830,9 @@ Assigns a value to a variable::
 
 ``LIN(number)``
 ~~~~~~~~~~~~~~~
-Returns number of new lines::
+Returns number of new lines:
+
+.. code:: basic
 
 	10 PRINT "A" LIN(2) "B"
 	 A
@@ -746,14 +842,18 @@ Returns number of new lines::
 
 ``LOCATE y, x``
 ~~~~~~~~~~~~~~~
-Change the cursors position to ``y``, ``x``::
+Change the cursors position to ``y``, ``x``:
+
+.. code:: basic
 
 	10 LOCATE 5, 5
 
 
 ``LOG(n)``
 ~~~~~~~~~~
-Returns the natural logarithm of ``n``::
+Returns the natural logarithm of ``n``:
+
+.. code:: basic
 
 	10 PRINT LOG(6)
 	 1.792
@@ -761,7 +861,9 @@ Returns the natural logarithm of ``n``::
 
 ``LOG10(n)``
 ~~~~~~~~~~~~
-Returns the natural logarithm of ``n`` (Base 10)::
+Returns the natural logarithm of ``n`` (Base 10):
+
+.. code:: basic
 
 	10 PRINT LOG10(6)
 	 0.778
@@ -769,7 +871,9 @@ Returns the natural logarithm of ``n`` (Base 10)::
 
 ``MID$(String$, n, [l])``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-Returns a string of ``l`` characters from ``String$`` beginning with the ``n`` character::
+Returns a string of ``l`` characters from ``String$`` beginning with the ``n`` character:
+
+.. code:: basic
 
 	10 A$ = "Hello World"
 	20 PRINT MID$(A$,3,3)
@@ -778,7 +882,9 @@ Returns a string of ``l`` characters from ``String$`` beginning with the ``n`` c
 
 ``NINT(n)``
 ~~~~~~~~~~~
-Returns the nearest integer of the specified value (9.5 becomes 9)::
+Returns the nearest integer of the specified value (9.5 becomes 9):
+
+.. code:: basic
 
 	10 PRINT NINT(5.6)
 	 6
@@ -786,15 +892,19 @@ Returns the nearest integer of the specified value (9.5 becomes 9)::
 
 ``NUM(string$)``
 ~~~~~~~~~~~~~~~~
-Returns the ASCII value of the first character in a string::
+Returns the ASCII value of the first character in a string:
 
-	10 PRINT NUM("A")
+.. code:: basic
+
+	10 PRINT NUM("ABC")
 	 65
 
 
 ``OCT$(n)``
 ~~~~~~~~~~~
-Returns a octal value of ``n``::
+Returns a octal value of ``n``:
+
+.. code:: basic
 
 	10 PRINT OCT$(66)
 	 102
@@ -802,29 +912,37 @@ Returns a octal value of ``n``::
 
 ``OPEN filename, AS fileNumber``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Opens a file::
+Opens a file:
+
+.. code:: basic
 
 	 10 OPEN "filename.txt", AS #1
 
 
 ``PEEK(n)``
 ~~~~~~~~~~~
-Read a value from the specified memory location ``n``::
- 
+Read a value from the specified memory location ``n``:
+
+.. code:: basic
+
 	10 PRINT PEEK(1300)
 	 83
 
 
 ``POKE n, m``
 ~~~~~~~~~~~~~
-Write a byte of data ``m`` into the specified memory location ``n``::
+Write a byte of data ``m`` into the specified memory location ``n``:
+
+.. code:: basic
 
 	10 POKE 1300, 255
 
 
 ``POLKEY$``
 ~~~~~~~~~~~
-Returns one character read from the terminal. when no key is hit within one second, it returns an empty string::
+Returns one character read from the terminal. when no key is hit within one second, it returns an empty string:
+
+.. code:: basic
 
 	10 A$ = POLKEY$
 	20 PRINT A$
@@ -832,7 +950,9 @@ Returns one character read from the terminal. when no key is hit within one seco
 
 ``POS(string1$,string2$)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Returns the position of ``string2$`` in ``string1$`` indexed from 1 or 0 if not found::
+Returns the position of ``string2$`` in ``string1$`` indexed from 1 or 0 if not found:
+
+.. code:: basic
 
 	10 A$="ABCDE"
 	20 PRINT POS(A$,"CD")
@@ -853,7 +973,9 @@ Prints an expression to an open file at the specified record
 
 ``PRINT #fileNumber[,recordNumber];END``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Prints an ``EOF`` mark to a file, truncating the file at that record::
+Prints an ``EOF`` mark to a file, truncating the file at that record:
+
+.. code:: basic
 
 	10 A = 5
 	20 B = 10
@@ -865,19 +987,25 @@ Prints an ``EOF`` mark to a file, truncating the file at that record::
 	30 PRINT A$;
 	40 PRINT B$
 	 Hello World
+
 (Adding a ``;`` at the end of ``PRINT`` does not create a newline)
-::
+
+.. code:: basic
+
 	10 PRINT# 1, "Iam writing into a file"
 
 	10 PRINT #1;A$
 	20 PRINT #1,1;"Overwriting A$ in record 1"
 	30 PRINT #1,1;END : REM Truncates file at record 1
+
 (notice the position of the ``#`` and the space in the different forms of file access)
  
  
 ``R2D(n)``
 ~~~~~~~~~~
-Converts radians ``n`` to degrees::
+Converts radians ``n`` to degrees:
+
+.. code:: basic
 
 	10 PRINT R2D(1.2)
 	 68.755
@@ -885,7 +1013,9 @@ Converts radians ``n`` to degrees::
 
 ``READ #fileNumber[,recordNumber];variables``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Read a value from ``DATA`` or a file and assign them to variables::
+Read a value from ``DATA`` or a file and assign them to variables:
+
+.. code:: basic
 
 	10 DATA 4.1, 5.6, 9.98
 	20 READ A, B, C
@@ -895,9 +1025,12 @@ Read a value from ``DATA`` or a file and assign them to variables::
 	10 READ #1;A$
 	20 READ #1,4;B$
 
+
 ``REC(n)``
 ~~~~~~~~~~
-Returns the current record number (line number) in the specified file. (starts with 1)::
+Returns the current record number (line number) in the specified file. (starts with 1):
+
+.. code:: basic
 
 	10 OPEN "telehack.txt", AS #1
 	20 INPUT# 1, DUMP$
@@ -910,7 +1043,9 @@ Returns the current record number (line number) in the specified file. (starts w
 
 ``RENUMBER [start,[inc]]``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Renumbers the statements of the current program in memory. When optional parameters are not specified number starts at 10 and increments by 10 for each line. Can be abbrieviated to ``REN`` or ``RENUM``. Useful if you want to add more lines between existing statements::
+Renumbers the statements of the current program in memory. When optional parameters are not specified number starts at 10 and increments by 10 for each line. Can be abbrieviated to ``REN`` or ``RENUM``. Useful if you want to add more lines between existing statements:
+
+.. code:: basic
 
 	1 GOTO 2
 	2 END
@@ -919,9 +1054,12 @@ Renumbers the statements of the current program in memory. When optional paramet
 	10 GOTO 20
 	20 END
 
+
 ``RESTORE``
 ~~~~~~~~~~~
-Allow ``DATA`` statements to be reread::
+Allow ``DATA`` statements to be reread:
+
+.. code:: basic
 
 	10 DATA 4.1, 5.6, 9.98
 	20 READ A, B, C
@@ -935,7 +1073,9 @@ Allow ``DATA`` statements to be reread::
 
 ``RIGHT$(String$, n)``
 ~~~~~~~~~~~~~~~~~~~~~~
-Returns the rightmost number ``n`` characters of the specified ``String$``::
+Returns the rightmost number ``n`` characters of the specified ``String$``:
+
+.. code:: basic
 
 	10 A$ = "Hello World"
 	20 PRINT RIGHT$(A$, 5)
@@ -944,7 +1084,9 @@ Returns the rightmost number ``n`` characters of the specified ``String$``::
 
 ``RND(n)``
 ~~~~~~~~~~
-If ``n < 0``, returns a random number in the interval ``[0, 1]`` seeded by ``INT(n)``. If ``n = 0``, returns a random number in the interval ``[0, 1]``. If ``n > 0``, returns a random number in the interval ``[0, INT(n)]``::
+If ``n < 0``, returns a random number in the interval ``[0, 1]`` seeded by ``INT(n)``. If ``n = 0``, returns a random number in the interval ``[0, 1]``. If ``n > 0``, returns a random number in the interval ``[0, INT(n)]``:
+
+.. code:: basic
 
 	10 PRINT RND(-5)
 	20 PRINT RND(0)
@@ -956,7 +1098,9 @@ If ``n < 0``, returns a random number in the interval ``[0, 1]`` seeded by ``INT
 
 ``SGN(n)``
 ~~~~~~~~~~
-Returns the sign of ``n``::
+Returns the sign of ``n``:
+
+.. code:: basic
 
 	10 PRINT SGN(5)
 	20 PRINT SGN(0)
@@ -968,7 +1112,9 @@ Returns the sign of ``n``::
 
 ``SIN(n)``
 ~~~~~~~~~~
-Returns the trigonometric sine of ``n`` in radians::
+Returns the trigonometric sine of ``n`` in radians:
+
+.. code:: basic
 
 	10 PRINT SIN(36)
 	 -0.991778853443116
@@ -976,14 +1122,18 @@ Returns the trigonometric sine of ``n`` in radians::
 
 ``SLEEP n``
 ~~~~~~~~~~~
-Pauses the program for ``n`` seconds::
+Pauses the program for ``n`` seconds:
+
+.. code:: basic
 
 	10 SLEEP 5
 
 
 ``SPACE$(n)``, ``SPC$(n)``, ``SPA(n)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Returns ``n`` spaces::
+Returns ``n`` spaces:
+
+.. code:: basic
 
 	10 PRINT "ABC" SPACE$(10) "ABC"
 	 abc          abc
@@ -991,7 +1141,9 @@ Returns ``n`` spaces::
 
 ``SQR(n)``
 ~~~~~~~~~~
-Returns the square root of ``n``::
+Returns the square root of ``n``:
+
+.. code:: basic
 
 	10 PRINT SQR(36)
 	 6
@@ -1004,7 +1156,9 @@ Halts the program and returns to the basic interpreter. Useful for debugging pro
 
 ``STR$(n)``
 ~~~~~~~~~~~
-Returns a string representation of ``n``::
+Returns a string representation of ``n``:
+
+.. code:: basic
 
 	10 PRINT STR$(12345)
 	 12345
@@ -1012,7 +1166,9 @@ Returns a string representation of ``n``::
 
 ``STRING$(n, string)``
 ~~~~~~~~~~~~~~~~~~~~~~
-Repeats a string ``n`` times::
+Repeats a string ``n`` times:
+
+.. code:: basic
 
 	10 PRINT STRING$(10, "A")
 	 AAAAAAAAAA
@@ -1020,7 +1176,9 @@ Repeats a string ``n`` times::
 
 ``TAB(n), TAB$(n)``
 ~~~~~~~~~~~~~~~~~~~
-Returns ``n`` spaces::
+Returns ``n`` spaces:
+
+.. code:: basic
 
 	10 PRINT "ABC" TAB$(10) "ABC"
 	 abc          abc
@@ -1028,7 +1186,9 @@ Returns ``n`` spaces::
 
 ``TAN(n)``
 ~~~~~~~~~~
-Returns the trigonometric tangent of ``n`` in radians::
+Returns the trigonometric tangent of ``n`` in radians:
+
+.. code:: basic
 
 	10 PRINT TAN(38)
 	 0.310
@@ -1044,7 +1204,9 @@ Returns values of time and date depending on ``n``
 - ``3`` - current year (0-99)
 - ``4`` - current second (0-59)
 
-Example::
+Example:
+
+.. code:: basic
 
 	10 PRINT TIM(0)
 	 29
@@ -1052,7 +1214,9 @@ Example::
 
 ``TIME$``
 ~~~~~~~~~
-Returns the local system time::
+Returns the local system time:
+
+.. code:: basic
 
 	10 PRINT TIME$
 	 07:49:38
@@ -1060,7 +1224,9 @@ Returns the local system time::
 
 ``TIMER``
 ~~~~~~~~~
-Returns the number of seconds since midnight::
+Returns the number of seconds since midnight:
+
+.. code:: basic
 
 	10 PRINT TIMER
 	 28210
@@ -1074,7 +1240,9 @@ Returns the type of the next record in a file.
 - ``2`` - string data
 - ``3`` - end of file/data
 
-Example::
+Example:
+
+.. code:: basic
 
 	10  REM CREATE A FILE FOR TESTING
 	20  FILENAME$ = "TEST" + STR$(INT(RND(1)*128*2)) + ".TXT"
@@ -1086,7 +1254,7 @@ Example::
 	80  REM TEST TYP() COMMAND
 	90  OPEN FILENAME$, AS #1
 	100  PRINT TYP(1)
- 	 2
+	 2
 	110  REM ADVANCE ONE RECORD
 	120  INPUT# 1, DUMP$
 	130  PRINT TYP(1)
@@ -1106,7 +1274,9 @@ Starts tracing of program statements. Useful for debugging.
 
 ``UPS$(string$)``
 ~~~~~~~~~~~~~~~~~
-Returns the uppercase value of the given ``string$``::
+Returns the uppercase value of the given ``string$``:
+
+.. code:: basic
 
 	10 PRINT UPS$("hello")
 	 HELLO
@@ -1114,7 +1284,9 @@ Returns the uppercase value of the given ``string$``::
 
 ``USER$``
 ~~~~~~~~~
-Returns the current logged in user::
+Returns the current logged in user:
+
+.. code:: basic
 
 	10 PRINT USER$
 	 archer
@@ -1122,7 +1294,9 @@ Returns the current logged in user::
 
 ``WIDTH``
 ~~~~~~~~~
-Returns your terminal width::
+Returns your terminal width:
+
+.. code:: basic
 
 	10 PRINT width
 	 141
@@ -1130,11 +1304,14 @@ Returns your terminal width::
 
 ``VAL(String$)``
 ~~~~~~~~~~~~~~~~
-Returns the numerical value of the specified String$::
+Returns the numerical value of the specified String$:
+
+.. code:: basic
 
 	10 PRINT VAL("12345")
 	 12345
 
+----
 
-
-
+:Authors: *archer, jadawin, songer, underwood*
+:Date: *2020-02*

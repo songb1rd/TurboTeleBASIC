@@ -124,7 +124,7 @@ class CodeGen(Transformer):
         return Instr("BINARY_ADD")
 
     def SUB(self, tree):
-        return Instr("BINARY_SUB")
+        return Instr("BINARY_SUBTRACT")
 
     def MUL(self, tree):
         return Instr("BINARY_MULTIPLY")

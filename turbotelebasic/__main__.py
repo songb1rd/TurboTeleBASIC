@@ -1,19 +1,26 @@
 from io import TextIOWrapper
 from pathlib import Path
+from typing import Dict, List
 
 import click
 from click import File
-from lark import Lark
 
-with open(Path(__file__).absolute().parent / "telebasic.lark") as inf:
-    TELEBASIC_GRAMMAR = inf.read()
+from .compiler import compile
+
 
 @click.command()
 @click.argument("input_file", type=File("r"), required=False)
-def main(input_file: TextIOWrapper):
+@click.option("-i", "--interpret", is_flag=True)
+def main(*, input_file: TextIOWrapper, interpret: bool):
     """TuboTeleBASIC entry point."""
-    p = Lark(TELEBASIC_GRAMMAR, start="start", propagate_positions=True)
-    p.parse(input_file.read())
+    code_object = compile(input_file)
+
+    from dis import dis
+
+    dis(code_object)
+
+    if interpret:
+        exec(code_object)
 
 if __name__ == "__main__":
     main()

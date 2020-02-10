@@ -30,13 +30,13 @@ OR: "OR"
 
 SEPARATOR: (";" | ":" | "\\")
 
-?opp: ADD
-    | AND
+?opp: AND
     | OR
-    | SUB
-    | POW
     | MUL
     | DIV
+    | ADD
+    | SUB
+    | POW
     | LTEQ
     | GTEQ
     | LT
@@ -46,7 +46,7 @@ SEPARATOR: (";" | ":" | "\\")
 
 string: ("\"" (/[^"]+/)? "\"") | ("'" (/[^']+/)? "'")
 
-ident: CNAME "$"?
+ident: /(?!print|input|dim|then|if)[a-zA-Z]+/i "$"?
 
 args: expr ("," WS_INLINE? expr)*
 call: ident WS_INLINE? "(" args? ")"
@@ -73,7 +73,9 @@ then: ("then" | "THEN") then_body
 ?dim_one: ident "(" args ")"
 dim: ("dim" | "DIM") WS_INLINE? dim_one ("," WS_INLINE? dim_one)*
 
-for: ("for" | "FOR") WS_INLINE? ident EQ expr WS_INLINE? ("to" | "TO") expr WS_INLINE? (("step" | "STEP") WS_INLINE? expr)?
+step: ("step" | "STEP") WS_INLINE? expr
+to: ("to" | "TO") expr
+for: ("for" | "FOR") WS_INLINE? ident EQ expr WS_INLINE? to WS_INLINE? step?
 
 next: ("next" | "NEXT") WS_INLINE? comma_sep_expr
 
@@ -130,9 +132,8 @@ trace: ("troff"| "TROFF")
     | RESTORE
     | END
 
-// All TeleBASIC lines start with some positively signed numbered line.
-// Followed by a statement or raw expression.
-line: INT? WS? body WS?
+label: INT
+line: label? WS_INLINE? body WS_INLINE?
 
 start: (SEPARATOR | NEWLINE)
-    | (line WS_INLINE? (SEPARATOR+ | comment? NEWLINE))*
+    | (line WS_INLINE? (SEPARATOR+ | comment? NEWLINE | (SEPARATOR | NEWLINE)))*

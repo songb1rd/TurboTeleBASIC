@@ -5,5 +5,5 @@ T-lang:
   - turbotelebasic/telebasic.lark
 
 T-docs:
-  - docs/*
+  - docs/**/*
 

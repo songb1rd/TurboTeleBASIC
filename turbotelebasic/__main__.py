@@ -15,6 +15,7 @@ from .compiler import compile
 def main(*, input_file: TextIOWrapper, interpret: bool, opt_level: str):
     """TuboTeleBASIC entry point."""
     code_object = compile(input_file)
+    return
 
     from dis import dis
 

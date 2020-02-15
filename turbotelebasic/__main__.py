@@ -3,15 +3,16 @@ from pathlib import Path
 from typing import Dict, List
 
 import click
-from click import File
+from click import File, Choice
 
 from .compiler import compile
 
 
 @click.command()
-@click.argument("input_file", type=File("r"), required=False)
+@click.argument("input_file", type=File("r"))
 @click.option("-i", "--interpret", is_flag=True)
-def main(*, input_file: TextIOWrapper, interpret: bool):
+@click.option("-o", "--optimize", "opt_level", type=Choice("0123"))
+def main(*, input_file: TextIOWrapper, interpret: bool, opt_level: str):
     """TuboTeleBASIC entry point."""
     code_object = compile(input_file)
 

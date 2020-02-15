@@ -5,6 +5,9 @@ description = "A handy toolchain for the telebasic power user."
 authors = ["songer <NoTy>"]
 license = "MIT"
 
+[tool.poetry.scripts]
+ttb = 'turbotelebasic.__main__:main'
+
 [tool.poetry.dependencies]
 python = "^3.7"
 pytest = "^5.3.5"

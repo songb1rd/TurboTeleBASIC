@@ -67,7 +67,9 @@ print_using: ("print" | "PRINT") " "* "USING" WS_INLINE? expr ("," WS_INLINE? ex
 
 input: ("input" | "INPUT") " "* comma_sep_expr
 
-?then_body: (INT | goto | print | assign | aug_assign | gosub | if)
+label: INT
+
+?then_body: (label | goto | print | assign | aug_assign | gosub | if)
 then: ("then" | "THEN") then_body
 
 ?dim_one: ident "(" args ")"
@@ -93,8 +95,8 @@ defint: ("defint" | "DEFINT") expr
 
 locate: ("locate" | "LOCATE") comma_sep_expr
 
-goto: ("goto" | "GOTO") WS_INLINE? expr
-gosub: ("gosub" | "GOSUB") WS_INLINE? expr
+goto: ("goto" | "GOTO") WS_INLINE? (label | expr)
+gosub: ("gosub" | "GOSUB") WS_INLINE? (label | expr)
 
 def_args: ident ("," WS_INLINE ident)*
 def: ("def fn" | "DEF FN") ident WS_INLINE? "(" def_args ")" WS_INLINE? "=" WS_INLINE? expr
@@ -132,7 +134,6 @@ trace: ("troff"| "TROFF")
     | RESTORE
     | END
 
-label: INT
 line: label? WS_INLINE? body WS_INLINE?
 
 start: (SEPARATOR | NEWLINE)

@@ -1,0 +1,10 @@
+%import common.WS_INLINE
+%import common.CNAME
+
+relative: "\"" CNAME ".bas" "\""
+standard: "<" CNAME ">"
+
+include: "#include" WS_INLINE? (relative | standard)
+
+directives: include
+

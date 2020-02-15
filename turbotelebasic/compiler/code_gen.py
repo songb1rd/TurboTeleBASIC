@@ -5,17 +5,10 @@ from bytecode import Instr, Bytecode
 from lark import Lark, Token, Discard, v_args, Tree
 from lark.visitors import Visitor, Transformer
 
+from ..utils import flatten
+
 __all__ = ("CodeGen",)
 
-
-def flatten(seq):
-    if not seq:
-        return seq
-
-    if isinstance(seq[0], list):
-        return flatten(seq[0]) + flatten(seq[1:])
-
-    return seq[:1] + flatten(seq[1:])
 
 @v_args(tree=True)
 class CodeGen(Transformer):

@@ -13,12 +13,12 @@ Directive precedence ::
 import shlex
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Set
+from typing import List, Dict, Tuple, Set, Callable, Optional, Any
 from pathlib import Path
 
-from . import File
+from . import File, FileContents
 
-__all__ = []
+__all__ = ["Context"]
 
 @dataclass
 class Context:
@@ -31,7 +31,7 @@ class Context:
         path = self.source.path.parent.joinpath(include_path)
 
         with open(path) as included_file:
-            mapping = dict(enumerate(included_file))
+            mapping: FileContents = dict(enumerate(included_file))
 
         self.source.mapping[line] = file = File(mapping, path)
         self.included.append(file)
@@ -43,7 +43,9 @@ class Context:
 
         ticker = 0
         for key in sequence[line + 1:]:
-            source = self.source.mapping[key].strip()
+            entry = self.source.mapping[key]
+            assert isinstance(entry, str)
+            source = entry.strip()  # type: ignore
 
             if source == "}":
                 end = key
@@ -65,11 +67,11 @@ class Context:
                 ticker += 1
             else:
                 leaf = source
-                value = ticker
+                value = f"{ticker}"
                 ticker += 1
 
             self.source.mapping[key] = f"#define {stem}.{leaf} {value}"
-            self.mapped["define"].append((key, [f"{stem}.{leaf}", f"{value}"]))
+            self.mapped[key] = ("define", [f"{stem}.{leaf}", f"{value}"])
         else:
             raise RuntimeError("Ran out of runway.")
 
@@ -94,7 +96,7 @@ class Context:
 
         sequence = sorted(list(self.source.mapping.keys()))
         for key in sequence[line + 1:]:
-            source = self.source.mapping[key].strip()
+            source = self.source.mapping[key].strip()  # type: ignore
 
             if source == "}":
                 end = key
@@ -118,11 +120,11 @@ class Context:
         subject = subject.strip()
 
         self.source.mapping[line] = f"#switch {subject} {{"
-        self.mapped[line].append(("switch", args))
+        self.mapped[line] = ("switch", args)  # type: ignore
 
         sequence = sorted(list(self.source.mapping.keys()))
         for key in sequence[line + 1:]:
-            source = self.source.mapping[key].strip()
+            source = self.source.mapping[key].strip()  # type: ignore
 
             if source == "}":
                 end = key
@@ -149,7 +151,7 @@ class Context:
 
         sequence = sorted(list(self.source.mapping))
         for key in sequence[line + 1:]:
-            source = self.source.mapping[key].strip()
+            source = self.source.mapping[key].strip()  #type: ignore
 
             if source == "#endif":
                 self.mapped.pop(key)
@@ -169,13 +171,14 @@ class Context:
             if source == "#elif":
                 self.mapped.pop(key)
 
-                _, target, = shlex.split(trimmed[1:])
+                _, target, = shlex.split(source[1:])
                 blocks.append((target, key))
                 continue
 
         else:
             raise RuntimeError("Missing #endif ?")
 
+        keep: Optional[Tuple[int, int]]
         for idx, (target, block_start) in enumerate(blocks):
             if target is None:
                 keep = (block_start + 1, end - 1)
@@ -188,11 +191,15 @@ class Context:
         else:
             keep = None
 
-        block_span = range(*keep)
+        ifdef_span = set(range(start, end))
 
-        ifdef_span = set(range(start, end)).difference(block_span)
+        if keep is not None:
+            block_span = range(*keep)
+            ifdef_span ^= set(block_span)
+        else:
+            block_span = range(0, 0)
 
-        block_source = {}
+        block_source: FileContents = {}
 
         for idx in block_span:
             block_source[idx] = self.source.mapping[idx]
@@ -200,15 +207,17 @@ class Context:
         for idx in ifdef_span:
             self.source.mapping[idx] = ""
 
-        for idx, line, in block_source.items():
-            self.source.mapping[idx] = line
+        for idx, source_, in block_source.items():
+            self.source.mapping[idx] = source_
 
 
-def scan(source: File) -> Dict[int, str]:
+def scan(source: File) -> Dict[int, Tuple[str, List[str]]]:
     """Scan a source map for lines containing pre-processor directives."""
     directives = {}
 
     for n, line in source.mapping.items():
+        assert isinstance(line, str)
+
         if (trimmed := line.strip()) and trimmed[0] == "#":
             assert trimmed[0] == "#", repr(trimmed)
 
@@ -234,10 +243,13 @@ def process(
     context = Context(source=source)
     scanned = scan(source)
 
+    op: str
+    args: List[str]
+
     for n, (op, args) in scanned.items():
         context.mapped[n] = (op, args)
 
-    directives: Dict[str, Tuple[bool, Callable[..., ...]]]
+    directives: Dict[str, Tuple[bool, Callable[..., Any]]]
     directives = {
         "ifdef": (ifdef, context.process_ifdef),
         "include": (include, context.process_include),

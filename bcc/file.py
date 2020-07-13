@@ -2,10 +2,10 @@ import sys
 import re
 import shlex
 from dataclasses import dataclass
-from typing import Dict, Union, List
+from typing import Dict, Union, List, Optional
 from pathlib import Path
 
-__all__ = ["File"]
+__all__ = ["File", "FileContents"]
 
 Block = List[str]
 FileContents = Dict[int, Union[str, "File", Block]]
@@ -23,7 +23,7 @@ class File:
         def is_code(line: str) -> bool:
             return bool(trimmed := line.strip()) and not trimmed.startswith("REM")
 
-        def check(value: FileContents):
+        def check(value: Union[str, "File", Block]):
             if isinstance(value, str):
                 return is_code(value)
 
@@ -37,7 +37,8 @@ class File:
 
         self.mapping = {n: value for n, value in self.mapping.items() if check(value)}
 
-    def flatten(self, *, buf: List[str] = None):
+    def flatten(self, *, buf: List[str] = None) -> "File":
+        output: Union[str, "File", Block]
         output = buf or []
 
         keys = sorted(self.mapping.keys())
@@ -46,11 +47,11 @@ class File:
 
             if isinstance(line, File):
                 line.flatten(buf=output)
-                continue
+            else:
+                assert isinstance(line, str)
+                output.append(line)
 
-            output.append(line)
-
-        mapping = dict(enumerate(output))
+        mapping: FileContents = dict(enumerate(output))
 
         return File(mapping=mapping, path=self.path)
 
@@ -64,11 +65,17 @@ class File:
         def fmt_ephemeral(n: int) -> str:
             return "{_line_0x%s}" % hex(n).upper()[2:]
 
-        for (index, source) in self.mapping.items():
-            if isinstance(source, File):
-                source.normalize(label_mapping=label_mapping, cursor=cursor)
+        proto_ephemeral: Optional[str]
+
+        for (index, entry) in self.mapping.items():
+            if isinstance((file := entry), File):
+                file.normalize(label_mapping=label_mapping, cursor=cursor)
+                del file
                 continue
 
+            assert isinstance(entry, str)
+
+            source: str
             source = source.strip()
 
             if " " not in source:

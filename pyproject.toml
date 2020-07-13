@@ -1,18 +1,12 @@
 [tool.poetry]
-name = "turbotelebasic"
+name = "bcc"
 version = "0.1.0"
 description = "A handy toolchain for the telebasic power user."
-authors = ["songer <NoTy>"]
+authors = ["songb1rd <49145061+songb1rd@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-pytest = "^5.3.5"
-click = "^7.0"
-lark-parser = "^0.8.1"
-wasmer = "^0.3.0"
-llvmlite = "^0.31.0"
-bytecode = "^0.10.0"
+python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 

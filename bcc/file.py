@@ -7,8 +7,7 @@ from pathlib import Path
 
 __all__ = ["File", "FileContents"]
 
-Block = List[str]
-FileContents = Dict[int, Union[str, "File", Block]]
+FileContents = Dict[int, Union[str, "File"]]
 
 _RE_NAME = re.compile(r"[a-zA-Z]+[$%#]?")
 _RE_CODE_LABEL = re.compile(r"{([a-zA-Z_][a-zA-Z_0-9]*)}")
@@ -31,7 +30,7 @@ class File:
         def is_code(line: str) -> bool:
             return bool(trimmed := line.strip()) and not trimmed.startswith("REM")
 
-        def check(value: Union[str, "File", Block]):
+        def check(value: Union[str, "File"]) -> bool:
             if isinstance(value, str):
                 return is_code(value)
 
@@ -43,14 +42,18 @@ class File:
 
             return True
 
-        self.mapping = {n: value for n, value in self.mapping.items() if check(value)}
+        self.mapping = {
+            n: value
+            for n, value in self.mapping.items()
+            if check(value)
+        }
 
-    def flatten(self, *, buf: List[str] = None) -> "File":
-        output: Union[str, "File", Block]
+    def flatten(self, *, buf: List[Union[str, "File"]] = None) -> "File":
+        """"""
+        output: List[Union[str, "File"]]
         output = buf or []
 
-        keys = sorted(self.mapping.keys())
-        for key in keys:
+        for key in sorted(self.mapping):
             line = self.mapping[key]
 
             if isinstance(line, File):
@@ -70,6 +73,7 @@ class File:
             * Coerce every numbered line into label form
             * Substitute GOTO/GOSUB destination with coerced label form
         """
+
         def fmt_ephemeral(n: int) -> str:
             return "{_line_0x%s}" % hex(n).upper()[2:]
 
@@ -83,8 +87,7 @@ class File:
 
             assert isinstance(entry, str)
 
-            source: str
-            source = source.strip()
+            source = entry.strip()
 
             if " " not in source:
                 source = f" {source}"
@@ -112,7 +115,6 @@ class File:
                 cursor += 1
             else:
                 proto_ephemeral = None
-
 
             while (match := re.search(r"GO(TO|SUB) (\d+)", rest)) is not None:
                 to_sub, dest, = match[1], match[2]

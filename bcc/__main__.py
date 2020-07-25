@@ -1,4 +1,5 @@
 import re
+from typing import Any
 
 from . import preproc, File
 
@@ -9,8 +10,6 @@ _RE_CODE_LABEL = re.compile(r"{([a-zA-Z_][\.a-zA-Z_0-9]*)}")
 def main():
     step = 1
     starting_point = cursor = 0x00
-
-    label_mapping = {}
 
     import sys
 
@@ -34,8 +33,12 @@ def main():
 
     files = preprocess_recursively(output_file)
 
-    for context in files:
-        label_mapping.update(context.labels)
+    label_mapping: Dict[str, Any]
+    label_mapping = {
+        name: value
+        for context in files
+        for name, value in context.labels.items()
+    }
 
     output_file.remove_comments(recursive=True)
 

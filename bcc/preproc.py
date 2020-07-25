@@ -20,6 +20,7 @@ from . import File, FileContents
 
 __all__ = ["Context"]
 
+
 @dataclass
 class Context:
     source: File = field(init=True, repr=False)
@@ -42,7 +43,7 @@ class Context:
         end = line
 
         ticker = 0
-        for key in sequence[line + 1:]:
+        for key in sequence[line + 1 :]:
             entry = self.source.mapping[key]
             assert isinstance(entry, str)
             source = entry.strip()  # type: ignore
@@ -51,16 +52,20 @@ class Context:
                 end = key
                 break
 
-            assert source[-1] == ",", f"Possibly missing COMMA \",\" on {line=!r}"
+            assert source[-1] == ",", f'Possibly missing COMMA "," on {line=!r}'
 
             source = source[:-1]
 
             if "=" in source:
-                assert source.count("=") == 1, f"Expected only one EQUALS \"=\" on {line=!r}"
+                assert (
+                    source.count("=") == 1
+                ), f'Expected only one EQUALS "=" on {line=!r}'
                 leaf, value = source.split("=", maxsplit=1)
                 value = value.strip()
 
-                assert value.isdigit(), f"Enum values must only be digits. (Got {value=!r})"
+                assert (
+                    value.isdigit()
+                ), f"Enum values must only be digits. (Got {value=!r})"
                 assert int(value) >= ticker, f"Can't reset enum values past previous."
 
                 ticker = int(value)
@@ -95,7 +100,7 @@ class Context:
         subject = subject.strip()
 
         sequence = sorted(list(self.source.mapping.keys()))
-        for key in sequence[line + 1:]:
+        for key in sequence[line + 1 :]:
             source = self.source.mapping[key].strip()  # type: ignore
 
             if source == "}":
@@ -123,7 +128,7 @@ class Context:
         self.mapped[line] = ("switch", args)  # type: ignore
 
         sequence = sorted(list(self.source.mapping.keys()))
-        for key in sequence[line + 1:]:
+        for key in sequence[line + 1 :]:
             source = self.source.mapping[key].strip()  # type: ignore
 
             if source == "}":
@@ -141,7 +146,7 @@ class Context:
             raise RuntimeError("Ran out of runway.")
 
     def process_ifdef(self, line: int, *args):
-        target, = args
+        (target,) = args
 
         blocks = [(target, line)]
 
@@ -150,8 +155,8 @@ class Context:
         else_found = False
 
         sequence = sorted(list(self.source.mapping))
-        for key in sequence[line + 1:]:
-            source = self.source.mapping[key].strip()  #type: ignore
+        for key in sequence[line + 1 :]:
+            source = self.source.mapping[key].strip()  # type: ignore
 
             if source == "#endif":
                 self.mapped.pop(key)

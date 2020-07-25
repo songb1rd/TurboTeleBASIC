@@ -61,7 +61,7 @@ def main():
     for n, item in file.mapping.items():
         assert isinstance(item, str), repr(item)
 
-        if (results := [match.group(1) for match in _RE_CODE_LABEL.finditer(item)]):
+        if results := [match.group(1) for match in _RE_CODE_LABEL.finditer(item)]:
             labels[n] = results
 
     # Perform renumbering

@@ -37,17 +37,7 @@ def main():
     for context in files:
         label_mapping.update(context.labels)
 
-
     output_file.remove_comments(recursive=True)
-
-    def into_str(part):
-        if isinstance(part, str):
-            return part.strip()
-
-        assert isinstance(part, File)
-
-        part = "\n".join(into_str(part) for _, part in part.mapping.items())
-        return part.strip()
 
     # Normalize output
 
@@ -106,7 +96,7 @@ def main():
         if source != file.mapping[line]:
             file.mapping[line] = source
 
-    print(into_str(file))
+    print(f"{file!s}")
 
 
 if __name__ == "__main__":

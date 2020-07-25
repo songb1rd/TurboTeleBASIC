@@ -19,6 +19,14 @@ class File:
     mapping: FileContents
     path: Path
 
+    def __str__(self) -> str:
+        output = "\n".join(
+            part.strip() if isinstance(part, str) else str(part)
+            for _, part in self.mapping.items()
+        )
+
+        return output.strip()
+
     def remove_comments(self, *, recursive: bool = False):
         def is_code(line: str) -> bool:
             return bool(trimmed := line.strip()) and not trimmed.startswith("REM")
